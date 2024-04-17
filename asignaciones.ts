@@ -3,29 +3,48 @@
 // ¡OJO: apuntamos a tener millones de tareas en nuestra base de datos!
 namespace asignaciones {
 
-    interface Persona{
-        nombre: string,
-        apellido: string
-    }
-
-    interface TareasPersona {
-        nombrePersona: Persona,
-        nombreTarea: string,
+    interface Tareas {
+        pendiente: boolean,
+        nombreTarea?: string,
         prioridad: number,
     }
-    type ResultadoBusqueda<T> =
-        | { tipo: "exito", encontrado: T, tareas:TareasPersona }
-        | { tipo: "no_encontrado" }
 
-    function formatearResultado<T>(resultado: ResultadoBusqueda<T>): string {
-        if (resultado.tipo === "exito")
-            return `Se encontro a ${resultado.encontrado} y sus tareas son ${resultado.tareas.nombreTarea}`;
-        else
-            return `No se encontro nada`;
+    type Nombre = string;
+
+    var nombresPorTareas = new Map<Nombre, Tareas[]>();
+
+    console.log("arranca vacio para cada nombre");
+    console.log(nombresPorTareas);
+
+
+    // console.log("Agrego una asociacion");
+    // nombresPorTareas.set("jime", [{ pendiente: false, prioridad: 1 }, { pendiente: false, nombreTarea: "Hacer compras", prioridad: 1 }]);
+    // console.log(nombresPorTareas);
+
+    const asignarNombreYTareas = (mapa: Map<Nombre, Tareas[]>, nombre: Nombre, tareas: Tareas[]) => {
+
+        let tareasAsignadas = mapa.get(nombre);
+
+        if (tareasAsignadas === undefined) {
+            tareasAsignadas = [];
+        }
+        tareasAsignadas.push(...tareas);
+
+        mapa.set(nombre, tareasAsignadas);
     }
 
-    // const personas: ResultadoBusqueda<T> = { tipo: "exito", encontrado:"jime"  };
-    // console.log(formatearResultado(personas));
-
-
+    asignarNombreYTareas(nombresPorTareas, "jime", [
+        { pendiente: true, nombreTarea: "Revisar correo electrónico", prioridad: 3 }
+    ]);
+    
+    asignarNombreYTareas(nombresPorTareas, "pepe", [
+        { pendiente: true, nombreTarea: "Hacer la compra", prioridad: 1 },
+        { pendiente: true, nombreTarea: "Preparar la cena", prioridad: 2 }
+    ]);
+    
+    asignarNombreYTareas(nombresPorTareas, "jime", [
+        { pendiente: true, nombreTarea: "Lavar la ropa", prioridad: 1 },
+        { pendiente: true, nombreTarea: "Estudiar para el examen", prioridad: 2 }
+    ]);
+    console.log(nombresPorTareas);
 }

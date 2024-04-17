@@ -3,11 +3,11 @@ namespace mostrarTareas {
     interface Tareas {
         pendiente: boolean,
         nombreTarea?: string,
-        prioridad?: number,
+        prioridad: number,
     }
 
     const tareas: Tareas[] = [
-        { pendiente: false },
+        { pendiente: false, prioridad:1 },
         { pendiente: false, nombreTarea: "Hacer compras", prioridad: 1 },
         { pendiente: true, nombreTarea: "Ordenar pieza", prioridad: 1 },
         { pendiente: true, nombreTarea: "Lavar ropa", prioridad: 2 },
@@ -28,7 +28,9 @@ namespace mostrarTareas {
         if (!a.pendiente && b.pendiente) {
             return 1;
         }
-        return (a.prioridad || 0) - (b.prioridad || 0);
+       
+        return a.prioridad - b.prioridad;
+    
 
     }
 

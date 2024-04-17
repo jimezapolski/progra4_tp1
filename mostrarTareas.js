@@ -3,7 +3,7 @@
 var mostrarTareas;
 (function (mostrarTareas_1) {
     const tareas = [
-        { pendiente: false },
+        { pendiente: false, prioridad: 1 },
         { pendiente: false, nombreTarea: "Hacer compras", prioridad: 1 },
         { pendiente: true, nombreTarea: "Ordenar pieza", prioridad: 1 },
         { pendiente: true, nombreTarea: "Lavar ropa", prioridad: 2 },
@@ -21,7 +21,7 @@ var mostrarTareas;
         if (!a.pendiente && b.pendiente) {
             return 1;
         }
-        return (a.prioridad || 0) - (b.prioridad || 0);
+        return a.prioridad - b.prioridad;
     }
     tareas.sort(mostrarTareas);
     console.log("La lista de tareas pendientes ordenadas por prioridad: ", tareas);
